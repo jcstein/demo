@@ -7,7 +7,7 @@ import { WalletLinkConnector } from "wagmi/connectors/walletLink";
 import { providers } from "ethers";
 
 // Get environment variables
-const ankrId = process.env.NEXT_PUBLIC_ANKR_ID as string;
+const infuraId = process.env.NEXT_PUBLIC_INFURA_ID as string;
 
 // Pick chains
 const chains = defaultChains;
@@ -24,7 +24,7 @@ const connectors = ({ chainId }: ConnectorsConfig) => {
     new WalletConnectConnector({
       chains,
       options: {
-        ankrId,
+        infuraId,
         qrcode: true,
       },
     }),
@@ -32,7 +32,7 @@ const connectors = ({ chainId }: ConnectorsConfig) => {
       chains,
       options: {
         appName: "create-web3-frontend",
-        jsonRpcUrl: `${rpcUrl}/${ankrId}`,
+        jsonRpcUrl: `${rpcUrl}/${infuraId}`,
       },
     }),
   ];
@@ -47,12 +47,12 @@ const provider = ({ chainId }: ProviderConfig) =>
   providers.getDefaultProvider(
     isChainSupported(chainId) ? chainId : defaultChain.id,
     {
-      ankrId,
+      infuraId,
     }
   );
 const webSocketProvider = ({ chainId }: ProviderConfig) =>
   isChainSupported(chainId)
-    ? new providers.InfuraWebSocketProvider(chainId, ankrId)
+    ? new providers.InfuraWebSocketProvider(chainId, infuraId)
     : undefined;
 
 function MyApp({ Component, pageProps }: AppProps) {
